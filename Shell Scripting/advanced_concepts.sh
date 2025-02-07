@@ -1,80 +1,52 @@
 #!/bin/bash
 
 # File: advanced_concepts.sh
-# Purpose: Advanced shell scripting concepts and techniques
-# Usage: ./advanced_concepts.sh
+# Purpose: Advanced shell scripting concepts including error handling,
+#          debugging, optimization, and network operations
 
 ###########################################
 # 1. ERROR HANDLING
 ###########################################
-setup_error_handling() {
-    # Enable error handling options
-    set -e  # Exit immediately if a command exits with a non-zero status
-    set -u  # Treat unset variables as an error and exit immediately
-    set -o pipefail  # Return the exit status of the last command in the pipe that failed
-
-    # Trap errors and call error_handler with relevant information
-    # - $? : The exit code of the last executed command
-    # - $LINENO : The line number where the error occurred
-    # - $BASH_LINENO : An array of line numbers for each function call
-    # - $BASH_COMMAND : The command that was executed
-    # - FUNCNAME : An array of function names currently on the call stack
-    trap 'error_handler $? $LINENO $BASH_LINENO "$BASH_COMMAND" $(printf "::%s" ${FUNCNAME[@]:-})' ERR
-}
+set -e  # Exit on error
+set -u  # Exit on undefined variable
+set -o pipefail  # Exit on pipe failure
 
 error_handler() {
-    local exit_code=$1
-    local line_no=$2
-    local bash_lineno=$3
-    local last_command=$4
-    local func_trace=$5
-    
-    echo "Error on line $line_no: Command '$last_command' exited with status $exit_code"
-    echo "Function trace: $func_trace"
+    local line_no=$1
+    local command=$2
+    echo "Error on line ${line_no}: Command '${command}' failed"
+    exit 1
 }
+
+trap 'error_handler ${LINENO} "$BASH_COMMAND"' ERR
 
 ###########################################
 # 2. DEBUGGING TECHNIQUES
 ###########################################
-enable_debugging() {
-    # Enable debug mode
-    set -x
+debug_mode() {
+    set -x  # Enable debug mode
     
-    # Debug specific section
-    {
-        set -x
-        echo "Debugging this section"
-        local var="test"
-        echo $var
-        set +x
-    }
+    # Test operations
+    local var1="test"
+    local var2="debug"
+    echo "${var1}_${var2}"
     
-    # Stack trace function
-    print_stack_trace() {
-        local frame=0
-        while caller $frame; do
-            ((frame++))
-        done
-    }
+    set +x  # Disable debug mode
 }
 
 ###########################################
 # 3. PERFORMANCE OPTIMIZATION
 ###########################################
-optimize_performance() {
-    # Use built-in commands
+optimize_operations() {
+    # Use native bash operations instead of external commands
     local start=$SECONDS
     
-    # Array operations
-    declare -A hash_map
-    for i in {1..1000}; do
-        hash_map[$i]=$i
-    done
+    # Optimized string operations
+    local str="hello,world,test"
+    IFS=',' read -ra ADDR <<< "$str"
     
-    # Fast string operations
-    local str="Hello World"
-    echo "${str:0:5}"  # Substring
-    echo "${str//o/X}"  # Replace
+    # Integer arithmetic without expr
+    local result=$((5 + 3 * 2))
     
     echo "Execution time: $((SECONDS - start)) seconds"
 }
@@ -82,121 +54,100 @@ optimize_performance() {
 ###########################################
 # 4. PARALLEL PROCESSING
 ###########################################
-parallel_processing() {
+parallel_process() {
     process_item() {
         echo "Processing item $1"
         sleep 1
     }
     
-    # Parallel execution with job control
+    # Process items in parallel
     for i in {1..5}; do
         process_item $i &
     done
-    wait
     
-    # Using GNU Parallel if available
-    if command -v parallel &>/dev/null; then
-        parallel echo ::: {1..5}
-    fi
+    # Wait for all background processes
+    wait
 }
 
 ###########################################
 # 5. NAMED PIPES
 ###########################################
-named_pipe_demo() {
-    # Create named pipe
-    mkfifo /tmp/testpipe
+setup_named_pipe() {
+    local pipe="/tmp/testpipe"
+    mkfifo $pipe
     
     # Writer process
-    {
-        echo "Data through pipe" > /tmp/testpipe
-    } &
+    (echo "Data through pipe" > $pipe) &
     
     # Reader process
-    read line < /tmp/testpipe
-    echo "Received: $line"
+    (read line < $pipe; echo "Received: $line")
     
-    # Cleanup
-    rm /tmp/testpipe
+    rm $pipe
 }
 
 ###########################################
 # 6. NETWORK OPERATIONS
 ###########################################
-network_operations() {
-    # Check host availability
-    check_host() {
-        if ping -c 1 "$1" &>/dev/null; then
-            echo "$1 is up"
-        else
-            echo "$1 is down"
-        fi
-    }
+network_ops() {
+    # TCP connection using /dev/tcp
+    if exec 3>/dev/tcp/8.8.8.8/53 2>/dev/null; then
+        echo "Network is accessible"
+        exec 3>&-
+    fi
     
-    # TCP connection test
-    test_port() {
-        nc -zv "$1" "$2" 2>&1
-    }
-    
-    # HTTP request
-    http_get() {
-        curl -sL "$1"
-    }
+    # Simple HTTP GET request
+    exec 3</dev/tcp/example.com/80
+    printf "GET / HTTP/1.0\r\nHost: example.com\r\n\r\n" >&3
+    cat <&3
 }
 
 ###########################################
 # 7. SSH AUTOMATION
 ###########################################
-ssh_automation() {
-    # Generate SSH key
-    ssh-keygen -t rsa -b 4096 -f ~/.ssh/script_key -N ""
+ssh_operations() {
+    local remote_host="example.com"
+    local remote_user="user"
+    
+    # Generate SSH key pair
+    ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa -N ""
     
     # SSH command execution
-    remote_command() {
-        ssh -i ~/.ssh/script_key user@host "$1"
-    }
+    ssh -n $remote_user@$remote_host "uptime" 2>/dev/null || echo "SSH failed"
     
     # SCP file transfer
-    transfer_file() {
-        scp -i ~/.ssh/script_key "$1" user@host:~/
-    }
+    scp ./test.txt $remote_user@$remote_host:/tmp/ 2>/dev/null || echo "SCP failed"
 }
 
 ###########################################
 # 8. SECURE SHELL SCRIPTING
 ###########################################
-secure_practices() {
-    # Secure temporary files
-    temp_file=$(mktemp)
-    trap 'rm -f $temp_file' EXIT
+secure_operations() {
+    # Secure temporary file creation
+    local temp_file=$(mktemp)
     
-    # Input validation
-    validate_input() {
-        local input=$1
-        if [[ ! $input =~ ^[a-zA-Z0-9_-]+$ ]]; then
-            echo "Invalid input"
-            return 1
-        fi
-    }
+    # Secure permissions
+    umask 077
     
-    # Secure file operations
-    secure_write() {
-        umask 077
-        echo "secret data" > "$1"
-    }
+    # Secure variable handling
+    local password="sensitive_data"
+    readonly password
+    
+    # Clean up
+    shred -u $temp_file
 }
 
 ###########################################
 # MAIN EXECUTION
 ###########################################
 main() {
-    setup_error_handling
-    enable_debugging
-    optimize_performance
-    parallel_processing
-    named_pipe_demo
-    network_operations
-    secure_practices
+    echo "=== Advanced Concepts Demo ==="
+    
+    debug_mode
+    optimize_operations
+    parallel_process
+    setup_named_pipe
+    network_ops
+    secure_operations
 }
 
 main "$@"
