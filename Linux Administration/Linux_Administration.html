@@ -1,203 +1,701 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Linux Administration Guide</title>
-    <style>
-        :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #34495e;
-            --accent-color: #3498db;
-            --text-color: #333;
-            --code-bg: #f8f9fa;
-            --border-color: #dee2e6;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f5f6fa;
-        }
-
-        header {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 2rem;
-            border-radius: 8px;
-            margin-bottom: 2rem;
-        }
-
-        h1, h2, h3 {
-            color: var(--primary-color);
-            margin-top: 2rem;
-        }
-
-        .section {
-            background: white;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .code-block {
-            background-color: var(--code-bg);
-            padding: 1rem;
-            border-radius: 4px;
-            border-left: 4px solid var(--accent-color);
-            overflow-x: auto;
-            margin: 1rem 0;
-        }
-
-        pre {
-            margin: 0;
-            font-family: 'Courier New', Courier, monospace;
-        }
-
-        .note {
-            background-color: #fff3cd;
-            border-left: 4px solid #ffc107;
-            padding: 1rem;
-            margin: 1rem 0;
-        }
-
-        nav {
-            background-color: white;
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 2rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        nav ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        nav li {
-            margin-bottom: 0.5rem;
-        }
-
-        nav a {
-            color: var(--primary-color);
-            text-decoration: none;
-        }
-
-        nav a:hover {
-            color: var(--accent-color);
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Linux Administration: Beginner to Advanced</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 0 1rem;
+      background: #f4f4f4;
+      color: #333;
+    }
+    header {
+      background: #35424a;
+      color: #ffffff;
+      padding: 1rem 0;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    nav#toc {
+      background: #ffffff;
+      padding: 1rem;
+      border: 1px solid #ddd;
+      margin-bottom: 2rem;
+    }
+    nav#toc ul {
+      list-style: none;
+      padding: 0;
+    }
+    nav#toc ul li {
+      margin: 0.5rem 0;
+    }
+    nav#toc ul li a {
+      text-decoration: none;
+      color: #35424a;
+    }
+    section {
+      background: #ffffff;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      border: 1px solid #ddd;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+    pre {
+      background: #272822;
+      color: #f8f8f2;
+      padding: 1rem;
+      overflow-x: auto;
+    }
+    code {
+      font-family: Consolas, "Courier New", monospace;
+    }
+    h1, h2, h3, h4 {
+      color: #35424a;
+    }
+    .note {
+      background: #ffffcc;
+      border-left: 5px solid #ffeb3b;
+      padding: 0.5rem;
+      margin: 1rem 0;
+    }
+    @media (max-width: 768px) {
+      body {
+        padding: 0 0.5rem;
+      }
+      header, section {
+        padding: 1rem;
+      }
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>Linux Administration Guide</h1>
-        <p>A comprehensive guide to Linux system administration and best practices</p>
-    </header>
 
-    <nav>
-        <h2>Table of Contents</h2>
-        <ul>
-            <li><a href="#system-architecture">1. System Architecture</a></li>
-            <li><a href="#package-management">2. Package Management</a></li>
-            <li><a href="#user-administration">3. User Administration</a></li>
-            <li><a href="#storage-management">4. Storage Management</a></li>
-            <li><a href="#network-configuration">5. Network Configuration</a></li>
-            <li><a href="#service-management">6. Service Management</a></li>
-            <li><a href="#security">7. Security Administration</a></li>
-            <li><a href="#performance">8. Performance Tuning</a></li>
-            <li><a href="#automation">9. Automation and Scripting</a></li>
-            <li><a href="#monitoring">10. Monitoring and Logging</a></li>
-        </ul>
-    </nav>
+  <header>
+    <h1>Linux Administration: From Beginner to Advanced</h1>
+    <p>Your comprehensive guide to mastering Linux administration</p>
+  </header>
 
-    <div class="section" id="system-architecture">
-        <h2>1. System Architecture</h2>
-        <div class="subsection">
-            <h3>System Information Commands</h3>
-            <div class="code-block">
-                <pre>
-# Basic System Information
-uname -a                  # Display all system information
-cat /etc/os-release      # Distribution information
-lscpu                    # CPU information
-free -h                  # Memory information with human-readable sizes
-df -h                    # Disk space usage
-lsblk                    # Block devices information
+  <nav id="toc">
+    <h2>Table of Contents</h2>
+    <ul>
+      <li><a href="#introduction">1. Introduction & Overview</a></li>
+      <li><a href="#installation">2. Linux Installation & Setup</a></li>
+      <li><a href="#basic-commands">3. Basic Linux Commands</a></li>
+      <li><a href="#shell-scripting">4. Shell Scripting Fundamentals</a></li>
+      <li><a href="#package-management">5. Package Management</a></li>
+      <li><a href="#user-management">6. User & Group Management</a></li>
+      <li><a href="#process-service">7. Process & Service Management</a></li>
+      <li><a href="#storage-management">8. Disk & Storage Management</a></li>
+      <li><a href="#network-administration">9. Network Administration</a></li>
+      <li><a href="#security">10. Security Best Practices</a></li>
+      <li><a href="#monitoring-logging">11. Monitoring & Logging</a></li>
+      <li><a href="#advanced-topics">12. Advanced Topics</a></li>
+      <li><a href="#conclusion">13. Conclusion</a></li>
+    </ul>
+  </nav>
 
-# Process Management
-ps aux                   # List all processes
-top                      # Real-time process viewer
-htop                     # Enhanced process viewer
-                </pre>
-            </div>
-        </div>
+  <!-- 1. Introduction & Overview -->
+  <section id="introduction">
+    <h2>1. Introduction & Overview</h2>
+    <p>
+      Linux is a robust, multi-user operating system that has become the backbone of many modern servers, cloud infrastructures, and embedded systems. Whether you’re a beginner or an experienced administrator, mastering Linux administration is essential for managing systems efficiently and securely.
+    </p>
+    <p>
+      In this guide, we will cover all aspects of Linux administration—from initial installation and basic command-line usage to advanced topics like storage management, network configuration, security hardening, and performance monitoring.
+    </p>
+    <div class="note">
+      <strong>Note:</strong> This document is structured to help you gradually progress in your knowledge, with code examples and practical tips throughout each section.
     </div>
+  </section>
 
-    <div class="section" id="package-management">
-        <h2>2. Package Management</h2>
-        <div class="subsection">
-            <h3>APT (Debian/Ubuntu)</h3>
-            <div class="code-block">
-                <pre>
-# Repository Management
-sudo add-apt-repository ppa:user/repository-name
+  <!-- 2. Linux Installation & Setup -->
+  <section id="installation">
+    <h2>2. Linux Installation & Setup</h2>
+    <p>
+      Linux installation can vary depending on your distribution. Whether you’re installing Ubuntu, CentOS, Debian, or any other flavor, the principles remain the same: boot the installation media, configure partitions, set up networking, and complete the basic system installation.
+    </p>
+    <h3>2.1 Booting from Installation Media</h3>
+    <p>
+      Most Linux distributions offer a live CD/USB mode that lets you test the system before installing. Insert your bootable media and reboot your system. Ensure that your BIOS/UEFI is configured to boot from USB or CD/DVD.
+    </p>
+    <h3>2.2 Partitioning and Filesystems</h3>
+    <p>
+      During installation, you will need to partition your disk. Here’s an example using <code>fdisk</code> to create partitions on a new disk:
+    </p>
+    <pre><code># List disks
+fdisk -l
+
+# Start partitioning /dev/sdb
+fdisk /dev/sdb
+
+# In fdisk, type:
+# n (to create a new partition)
+# p (for primary partition)
+# Accept default values or specify sizes as needed.
+# Then type:
+# w (to write changes)
+    </code></pre>
+    <p>
+      After partitioning, you might create a filesystem using <code>mkfs</code>:
+    </p>
+    <pre><code># Create an ext4 filesystem on /dev/sdb1
+mkfs.ext4 /dev/sdb1
+    </code></pre>
+    <h3>2.3 Basic System Setup</h3>
+    <p>
+      Once Linux is installed, update your system and configure basic settings. For example, on Debian/Ubuntu:
+    </p>
+    <pre><code># Update package list and upgrade packages
+sudo apt update && sudo apt upgrade -y
+    </code></pre>
+    <p>
+      And on CentOS/RHEL:
+    </p>
+    <pre><code># Update system packages
+sudo yum update -y
+    </code></pre>
+  </section>
+
+  <!-- 3. Basic Linux Commands -->
+  <section id="basic-commands">
+    <h2>3. Basic Linux Commands</h2>
+    <p>
+      Mastering basic commands is the foundation of Linux administration. Here are some essential commands:
+    </p>
+    <ul>
+      <li><code>ls</code> – List directory contents.</li>
+      <li><code>cd</code> – Change directory.</li>
+      <li><code>pwd</code> – Print working directory.</li>
+      <li><code>cp</code> – Copy files and directories.</li>
+      <li><code>mv</code> – Move or rename files.</li>
+      <li><code>rm</code> – Remove files or directories.</li>
+      <li><code>cat</code> – Concatenate and display files.</li>
+      <li><code>grep</code> – Search text using patterns.</li>
+    </ul>
+    <h3>Examples:</h3>
+    <pre><code># List all files including hidden ones
+ls -la
+
+# Change to the /var/log directory
+cd /var/log
+
+# Print the current directory
+pwd
+
+# Copy a file from one location to another
+cp /path/to/source.txt /path/to/destination.txt
+
+# Recursively remove a directory
+rm -r /path/to/directory
+
+# Search for the term "error" in a log file
+grep "error" /var/log/syslog
+    </code></pre>
+    <p>
+      These commands form the building blocks of your daily tasks as a Linux administrator.
+    </p>
+  </section>
+
+  <!-- 4. Shell Scripting Fundamentals -->
+  <section id="shell-scripting">
+    <h2>4. Shell Scripting Fundamentals</h2>
+    <p>
+      Shell scripting is a powerful way to automate tasks in Linux. Here we cover the basics of writing and executing shell scripts using <code>bash</code>.
+    </p>
+    <h3>4.1 Creating a Basic Script</h3>
+    <p>
+      Create a file called <code>hello.sh</code> with the following contents:
+    </p>
+    <pre><code>#!/bin/bash
+# A simple script to print a greeting
+echo "Hello, Linux Administrator!"
+    </code></pre>
+    <p>
+      Make the script executable:
+    </p>
+    <pre><code>chmod +x hello.sh
+    </code></pre>
+    <p>
+      Then run it:
+    </p>
+    <pre><code>./hello.sh
+    </code></pre>
+    <h3>4.2 Variables, Conditionals, and Loops</h3>
+    <p>
+      Below is an example script that demonstrates the use of variables, conditionals, and loops:
+    </p>
+    <pre><code>#!/bin/bash
+# Define a variable
+USERNAME="admin"
+
+# Check if the current user is the admin
+if [ "$(whoami)" == "$USERNAME" ]; then
+  echo "You are logged in as $USERNAME"
+else
+  echo "You are not $USERNAME"
+fi
+
+# Loop through a list of directories and print their contents
+for DIR in /etc /var /usr; do
+  echo "Contents of $DIR:"
+  ls -l "$DIR" | head -n 5  # Show only first 5 entries for brevity
+  echo "---------------------"
+done
+    </code></pre>
+    <p>
+      With these constructs, you can build more complex scripts to handle system tasks, automate backups, manage logs, and more.
+    </p>
+  </section>
+
+  <!-- 5. Package Management -->
+  <section id="package-management">
+    <h2>5. Package Management</h2>
+    <p>
+      Linux distributions use package management systems to install, update, and remove software. The most common package managers include <code>apt</code> for Debian/Ubuntu and <code>yum</code>/<code>dnf</code> for CentOS/RHEL.
+    </p>
+    <h3>5.1 Using APT on Debian/Ubuntu</h3>
+    <p>
+      Basic commands using <code>apt</code>:
+    </p>
+    <pre><code># Update package lists
 sudo apt update
+
+# Upgrade installed packages
 sudo apt upgrade -y
 
-# Package Operations
-sudo apt install package-name
-sudo apt remove package-name
-sudo apt autoremove
-sudo apt search keyword
-                </pre>
-            </div>
-        </div>
+# Install a new package (e.g., nginx)
+sudo apt install nginx -y
+
+# Remove an installed package
+sudo apt remove nginx -y
+
+# Search for a package
+apt search apache
+    </code></pre>
+    <h3>5.2 Using YUM/DNF on CentOS/RHEL</h3>
+    <p>
+      Basic commands using <code>yum</code> or <code>dnf</code>:
+    </p>
+    <pre><code># Update the system
+sudo yum update -y
+
+# Install a package (e.g., httpd)
+sudo yum install httpd -y
+
+# Start the httpd service
+sudo systemctl start httpd
+
+# Enable the service to start at boot
+sudo systemctl enable httpd
+    </code></pre>
+    <p>
+      Package management is key to keeping your system secure and up to date.
+    </p>
+  </section>
+
+  <!-- 6. User & Group Management -->
+  <section id="user-management">
+    <h2>6. User & Group Management</h2>
+    <p>
+      Managing users and groups is a fundamental task for Linux administrators. This includes creating and deleting users, managing groups, and setting proper file permissions.
+    </p>
+    <h3>6.1 Creating Users and Groups</h3>
+    <p>
+      To create a new user:
+    </p>
+    <pre><code># Create a user called "developer"
+sudo useradd -m developer
+
+# Set a password for the user
+sudo passwd developer
+    </code></pre>
+    <p>
+      To create a group and add a user to it:
+    </p>
+    <pre><code># Create a group called "devgroup"
+sudo groupadd devgroup
+
+# Add the user "developer" to "devgroup"
+sudo usermod -aG devgroup developer
+    </code></pre>
+    <h3>6.2 Managing Permissions</h3>
+    <p>
+      Linux uses read, write, and execute permissions for the user, group, and others. For example:
+    </p>
+    <pre><code># Change the permissions of a file
+chmod 755 /path/to/script.sh
+
+# Change the ownership of a file
+sudo chown developer:devgroup /path/to/file.txt
+    </code></pre>
+    <p>
+      Using proper permissions helps secure your system by ensuring that only authorized users can access or modify files.
+    </p>
+  </section>
+
+  <!-- 7. Process & Service Management -->
+  <section id="process-service">
+    <h2>7. Process & Service Management</h2>
+    <p>
+      Efficient process management ensures that your system runs smoothly. Linux provides several tools to manage processes and services.
+    </p>
+    <h3>7.1 Process Management</h3>
+    <p>
+      Some common commands for process management are:
+    </p>
+    <pre><code># List running processes
+ps aux
+
+# Monitor processes in real time
+top
+
+# Kill a process by its process ID (PID)
+sudo kill -9 1234
+    </code></pre>
+    <h3>7.2 Service Management with Systemd</h3>
+    <p>
+      Most modern Linux distributions use <code>systemd</code> for service management. Here are some basic <code>systemctl</code> commands:
+    </p>
+    <pre><code># Check the status of a service (e.g., nginx)
+sudo systemctl status nginx
+
+# Start a service
+sudo systemctl start nginx
+
+# Stop a service
+sudo systemctl stop nginx
+
+# Restart a service
+sudo systemctl restart nginx
+
+# Enable a service to start at boot
+sudo systemctl enable nginx
+
+# Disable a service from starting at boot
+sudo systemctl disable nginx
+    </code></pre>
+    <p>
+      By mastering process and service management, you can ensure that applications run reliably on your system.
+    </p>
+  </section>
+
+  <!-- 8. Disk & Storage Management -->
+  <section id="storage-management">
+    <h2>8. Disk & Storage Management</h2>
+    <p>
+      Disk management is a critical skill for a Linux administrator. This includes partitioning disks, creating filesystems, mounting filesystems, and using logical volume management (LVM).
+    </p>
+    <h3>8.1 Partitioning and Filesystem Creation</h3>
+    <p>
+      Using <code>fdisk</code> or <code>parted</code> can help you manage partitions. For example, using <code>fdisk</code>:
+    </p>
+    <pre><code># List available disks
+sudo fdisk -l
+
+# Create or modify partitions on /dev/sda
+sudo fdisk /dev/sda
+    </code></pre>
+    <p>
+      After partitioning, create a filesystem:
+    </p>
+    <pre><code># Create an ext4 filesystem on /dev/sda1
+sudo mkfs.ext4 /dev/sda1
+    </code></pre>
+    <h3>8.2 Mounting Filesystems and /etc/fstab</h3>
+    <p>
+      To mount a filesystem:
+    </p>
+    <pre><code># Create a mount point
+sudo mkdir -p /mnt/data
+
+# Mount the partition
+sudo mount /dev/sda1 /mnt/data
+    </code></pre>
+    <p>
+      To ensure the partition is mounted on boot, add an entry in <code>/etc/fstab</code>:
+    </p>
+    <pre><code>/dev/sda1   /mnt/data   ext4   defaults   0   2
+    </code></pre>
+    <h3>8.3 Logical Volume Management (LVM)</h3>
+    <p>
+      LVM allows flexible disk management. Below is an example workflow:
+    </p>
+    <pre><code># Create a physical volume
+sudo pvcreate /dev/sdb1
+
+# Create a volume group called "vg_data"
+sudo vgcreate vg_data /dev/sdb1
+
+# Create a logical volume called "lv_files" with 10G size
+sudo lvcreate -n lv_files -L 10G vg_data
+
+# Create a filesystem on the logical volume
+sudo mkfs.ext4 /dev/vg_data/lv_files
+
+# Mount the logical volume
+sudo mkdir -p /mnt/lv_files
+sudo mount /dev/vg_data/lv_files /mnt/lv_files
+    </code></pre>
+    <p>
+      With LVM, you can easily resize volumes or add new disks to your storage pool.
+    </p>
+  </section>
+
+  <!-- 9. Network Administration -->
+  <section id="network-administration">
+    <h2>9. Network Administration</h2>
+    <p>
+      Network configuration is crucial for connecting your Linux server to other systems and the internet. This section covers basic network configuration, troubleshooting, and firewall management.
+    </p>
+    <h3>9.1 Basic Network Commands</h3>
+    <p>
+      Common commands include:
+    </p>
+    <pre><code># Display network interfaces
+ip addr
+
+# Display routing table
+ip route
+
+# Test network connectivity
+ping google.com
+
+# Display open ports and connections
+netstat -tulpn
+    </code></pre>
+    <h3>9.2 Configuring Network Interfaces</h3>
+    <p>
+      On many distributions, network interfaces are configured via files (e.g., <code>/etc/network/interfaces</code> on Debian/Ubuntu or <code>/etc/sysconfig/network-scripts/ifcfg-eth0</code> on CentOS/RHEL). Here’s an example for Debian/Ubuntu:
+    </p>
+    <pre><code># /etc/network/interfaces
+auto eth0
+iface eth0 inet static
+  address 192.168.1.100
+  netmask 255.255.255.0
+  gateway 192.168.1.1
+    </code></pre>
+    <h3>9.3 Firewall Configuration</h3>
+    <p>
+      Linux systems often use <code>iptables</code> or more modern tools like <code>ufw</code> (Uncomplicated Firewall) to manage firewall rules. For example, using <code>ufw</code>:
+    </p>
+    <pre><code># Allow SSH
+sudo ufw allow ssh
+
+# Allow HTTP and HTTPS
+sudo ufw allow http
+sudo ufw allow https
+
+# Enable the firewall
+sudo ufw enable
+
+# Check firewall status
+sudo ufw status verbose
+    </code></pre>
+    <p>
+      These commands help protect your system from unwanted network traffic.
+    </p>
+  </section>
+
+  <!-- 10. Security Best Practices -->
+  <section id="security">
+    <h2>10. Security Best Practices</h2>
+    <p>
+      Securing your Linux system is critical. This section covers a range of security topics including file permissions, SSH hardening, SELinux/AppArmor, and firewall rules.
+    </p>
+    <h3>10.1 Securing SSH</h3>
+    <p>
+      Edit the SSH configuration file (<code>/etc/ssh/sshd_config</code>) to improve security. For example:
+    </p>
+    <pre><code># Disable root login
+PermitRootLogin no
+
+# Change the default SSH port (optional)
+Port 2222
+
+# Limit authentication attempts
+MaxAuthTries 3
+    </code></pre>
+    <p>
+      After editing, restart the SSH service:
+    </p>
+    <pre><code>sudo systemctl restart sshd
+    </code></pre>
+    <h3>10.2 File and Directory Permissions</h3>
+    <p>
+      Use <code>chmod</code> and <code>chown</code> to ensure that files have the correct permissions:
+    </p>
+    <pre><code># Set file permissions to 640 and directory permissions to 750
+chmod 640 /path/to/file
+chmod 750 /path/to/directory
+
+# Change the owner and group of a file
+sudo chown user:group /path/to/file
+    </code></pre>
+    <h3>10.3 SELinux and AppArmor</h3>
+    <p>
+      Many distributions use SELinux (CentOS/RHEL) or AppArmor (Ubuntu) for additional security controls.
+    </p>
+    <p>
+      For SELinux:
+    </p>
+    <pre><code># Check SELinux status
+sestatus
+
+# Set SELinux to permissive mode temporarily
+sudo setenforce 0
+    </code></pre>
+    <p>
+      For AppArmor:
+    </p>
+    <pre><code># Check AppArmor status
+sudo apparmor_status
+
+# Reload AppArmor profiles
+sudo systemctl reload apparmor
+    </code></pre>
+    <p>
+      Always follow best practices and keep your systems updated to protect against vulnerabilities.
+    </p>
+  </section>
+
+  <!-- 11. Monitoring & Logging -->
+  <section id="monitoring-logging">
+    <h2>11. Monitoring & Logging</h2>
+    <p>
+      Monitoring system performance and logging events are essential for maintaining the health and security of your Linux server.
+    </p>
+    <h3>11.1 System Monitoring Tools</h3>
+    <p>
+      Linux provides several tools to monitor system performance:
+    </p>
+    <ul>
+      <li><code>top</code> or <code>htop</code> – For monitoring processes and resource usage.</li>
+      <li><code>vmstat</code> – For memory and process statistics.</li>
+      <li><code>iostat</code> – For input/output statistics.</li>
+      <li><code>sar</code> – For historical system activity reports.</li>
+    </ul>
+    <pre><code># Example using vmstat
+vmstat 5
+
+# Using iostat for disk I/O stats
+iostat -xz 5
+    </code></pre>
+    <h3>11.2 Logging with Syslog and Journalctl</h3>
+    <p>
+      Traditional systems use <code>syslog</code> to manage logs, while modern systems use <code>systemd-journald</code>. To view logs:
+    </p>
+    <pre><code># View system logs using journalctl
+sudo journalctl -xe
+
+# View kernel messages
+sudo dmesg | tail -n 20
+    </code></pre>
+    <h3>11.3 Log Rotation</h3>
+    <p>
+      Log files can grow quickly, so log rotation is important. <code>logrotate</code> is commonly used to rotate, compress, and remove old log files. Here is an example configuration snippet for <code>/etc/logrotate.d/myapp</code>:
+    </p>
+    <pre><code>/var/log/myapp/*.log {
+    daily
+    missingok
+    rotate 14
+    compress
+    delaycompress
+    notifempty
+    create 0640 root adm
+}
+    </code></pre>
+    <p>
+      Proper log management helps ensure that you can diagnose issues while keeping disk usage in check.
+    </p>
+  </section>
+
+  <!-- 12. Advanced Topics -->
+  <section id="advanced-topics">
+    <h2>12. Advanced Topics</h2>
+    <p>
+      Once you’ve mastered the fundamentals of Linux administration, you may wish to explore advanced topics such as automation, containerization, and kernel tuning.
+    </p>
+    <h3>12.1 Automation with Ansible</h3>
+    <p>
+      Ansible is an automation tool that allows you to manage configurations across multiple servers. Below is an example playbook that installs and starts Nginx:
+    </p>
+    <pre><code>---
+- name: Install and Start Nginx
+  hosts: webservers
+  become: yes
+  tasks:
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: Start Nginx service
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+    </code></pre>
+    <h3>12.2 Containerization with Docker</h3>
+    <p>
+      Containers are a modern way to deploy applications. Here’s how to install Docker on Ubuntu:
+    </p>
+    <pre><code># Update existing package index and install prerequisites
+sudo apt update
+sudo apt install apt-transport-https ca-certificates curl gnupg-agent software-properties-common -y
+
+# Add Docker’s official GPG key
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+# Set up the stable repository
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+
+# Install Docker Engine
+sudo apt update
+sudo apt install docker-ce docker-ce-cli containerd.io -y
+
+# Verify Docker installation
+sudo docker run hello-world
+    </code></pre>
+    <h3>12.3 Kernel Tuning</h3>
+    <p>
+      Optimizing kernel parameters can improve system performance. Parameters are usually set in <code>/etc/sysctl.conf</code> or files under <code>/etc/sysctl.d/</code>. For example, to increase the maximum number of open files:
+    </p>
+    <pre><code># Edit /etc/sysctl.conf and add:
+fs.file-max = 100000
+
+# Apply the changes immediately
+sudo sysctl -p
+    </code></pre>
+    <p>
+      Kernel tuning is a powerful tool when you need to optimize performance for high-demand applications.
+    </p>
+  </section>
+
+  <!-- 13. Conclusion -->
+  <section id="conclusion">
+    <h2>13. Conclusion</h2>
+    <p>
+      Linux administration is a deep and expansive field. In this guide, we’ve covered everything from basic command-line usage and shell scripting to complex topics like storage management, network configuration, and advanced system tuning.
+    </p>
+    <p>
+      As you continue your journey, keep exploring and experimenting with new tools and best practices. Regularly consult official documentation, community forums, and security advisories to ensure your systems remain secure and efficient.
+    </p>
+    <p>
+      With the knowledge gained here, you are well on your way to mastering Linux administration—from the basics to the advanced techniques that power modern infrastructures.
+    </p>
+    <div class="note">
+      <strong>Best Practice Reminder:</strong> Always test configurations in a non-production environment and backup critical data before making significant changes.
     </div>
+  </section>
 
-    <div class="section" id="user-administration">
-        <h2>3. User Administration</h2>
-        <div class="subsection">
-            <h3>User Management</h3>
-            <div class="code-block">
-                <pre>
-# User Operations
-sudo useradd -m -s /bin/bash username
-sudo usermod -aG sudo username
-sudo passwd username
-sudo userdel -r username
+  <footer style="text-align: center; padding: 1rem; background: #35424a; color: #fff;">
+    <p>&copy; 2025 Linux Administration Guide. All rights reserved.</p>
+  </footer>
 
-# Group Operations
-sudo groupadd groupname
-sudo groupmod -n newname oldname
-sudo groupdel groupname
-                </pre>
-            </div>
-        </div>
-    </div>
-
-    <!-- Continue with similar sections for all topics -->
-
-    <div class="section">
-        <h2>Best Practices</h2>
-        <div class="note">
-            <p>Key points to remember:</p>
-            <ul>
-                <li>Always backup before making system changes</li>
-                <li>Use version control for configuration files</li>
-                <li>Document all system modifications</li>
-                <li>Implement monitoring and alerting</li>
-                <li>Regularly update and patch systems</li>
-            </ul>
-        </div>
-    </div>
-
-    <footer style="text-align: center; margin-top: 2rem; padding: 1rem; background: white; border-radius: 8px;">
-        <p>© 2025 Linux Administration Guide. Last updated: February 10, 2025 Fayaz Khan</p>
-    </footer>
 </body>
 </html>
