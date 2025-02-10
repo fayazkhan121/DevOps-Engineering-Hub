@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux Administration Guide</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --accent-color: #3498db;
+            --text-color: #333;
+            --code-bg: #f8f9fa;
+            --border-color: #dee2e6;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f6fa;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        h1, h2, h3 {
+            color: var(--primary-color);
+            margin-top: 2rem;
+        }
+
+        .section {
+            background: white;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .code-block {
+            background-color: var(--code-bg);
+            padding: 1rem;
+            border-radius: 4px;
+            border-left: 4px solid var(--accent-color);
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        pre {
+            margin: 0;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .note {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        nav {
+            background-color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        nav li {
+            margin-bottom: 0.5rem;
+        }
+
+        nav a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        nav a:hover {
+            color: var(--accent-color);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Linux Administration Guide</h1>
+        <p>A comprehensive guide to Linux system administration and best practices</p>
+    </header>
+
+    <nav>
+        <h2>Table of Contents</h2>
+        <ul>
+            <li><a href="#system-architecture">1. System Architecture</a></li>
+            <li><a href="#package-management">2. Package Management</a></li>
+            <li><a href="#user-administration">3. User Administration</a></li>
+            <li><a href="#storage-management">4. Storage Management</a></li>
+            <li><a href="#network-configuration">5. Network Configuration</a></li>
+            <li><a href="#service-management">6. Service Management</a></li>
+            <li><a href="#security">7. Security Administration</a></li>
+            <li><a href="#performance">8. Performance Tuning</a></li>
+            <li><a href="#automation">9. Automation and Scripting</a></li>
+            <li><a href="#monitoring">10. Monitoring and Logging</a></li>
+        </ul>
+    </nav>
+
+    <div class="section" id="system-architecture">
+        <h2>1. System Architecture</h2>
+        <div class="subsection">
+            <h3>System Information Commands</h3>
+            <div class="code-block">
+                <pre>
+# Basic System Information
+uname -a                  # Display all system information
+cat /etc/os-release      # Distribution information
+lscpu                    # CPU information
+free -h                  # Memory information with human-readable sizes
+df -h                    # Disk space usage
+lsblk                    # Block devices information
+
+# Process Management
+ps aux                   # List all processes
+top                      # Real-time process viewer
+htop                     # Enhanced process viewer
+                </pre>
+            </div>
+        </div>
+    </div>
+
+    <div class="section" id="package-management">
+        <h2>2. Package Management</h2>
+        <div class="subsection">
+            <h3>APT (Debian/Ubuntu)</h3>
+            <div class="code-block">
+                <pre>
+# Repository Management
+sudo add-apt-repository ppa:user/repository-name
+sudo apt update
+sudo apt upgrade -y
+
+# Package Operations
+sudo apt install package-name
+sudo apt remove package-name
+sudo apt autoremove
+sudo apt search keyword
+                </pre>
+            </div>
+        </div>
+    </div>
+
+    <div class="section" id="user-administration">
+        <h2>3. User Administration</h2>
+        <div class="subsection">
+            <h3>User Management</h3>
+            <div class="code-block">
+                <pre>
+# User Operations
+sudo useradd -m -s /bin/bash username
+sudo usermod -aG sudo username
+sudo passwd username
+sudo userdel -r username
+
+# Group Operations
+sudo groupadd groupname
+sudo groupmod -n newname oldname
+sudo groupdel groupname
+                </pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- Continue with similar sections for all topics -->
+
+    <div class="section">
+        <h2>Best Practices</h2>
+        <div class="note">
+            <p>Key points to remember:</p>
+            <ul>
+                <li>Always backup before making system changes</li>
+                <li>Use version control for configuration files</li>
+                <li>Document all system modifications</li>
+                <li>Implement monitoring and alerting</li>
+                <li>Regularly update and patch systems</li>
+            </ul>
+        </div>
+    </div>
+
+    <footer style="text-align: center; margin-top: 2rem; padding: 1rem; background: white; border-radius: 8px;">
+        <p>© 2025 Linux Administration Guide. Last updated: February 10, 2025</p>
+    </footer>
+</body>
+</html>

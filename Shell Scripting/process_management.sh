@@ -1,13 +1,18 @@
 #!/bin/bash
-
+#
 # File: process_management.sh
 # Purpose: Process management, job control, and daemon operations
 # Usage: ./process_management.sh
 # Note: Some operations require root privileges
+#
+# This script demonstrates process management, job control, and daemon operations
+# in Linux. It covers background processes, job control, process IDs, signal
+# handling, daemon processes, cron jobs, and process priority.
 
 ###########################################
 # 1. BACKGROUND PROCESSES
 ###########################################
+# Manage background processes
 manage_background_processes() {
     # Start process in background
     sleep 100 &
@@ -27,6 +32,7 @@ manage_background_processes() {
 ###########################################
 # 2. JOB CONTROL
 ###########################################
+# Demonstrate job control
 demonstrate_job_control() {
     # Start multiple processes
     sleep 100 &
@@ -48,6 +54,7 @@ demonstrate_job_control() {
 ###########################################
 # 3. PROCESS IDS
 ###########################################
+# Process information
 process_info() {
     # Current process
     echo "Current script PID: $$"
@@ -65,6 +72,7 @@ process_info() {
 ###########################################
 # 4. SIGNAL HANDLING
 ###########################################
+# Set up signal handlers
 setup_signal_handlers() {
     # Trap SIGINT (Ctrl+C)
     trap 'echo "SIGINT caught"; cleanup' SIGINT
@@ -76,6 +84,7 @@ setup_signal_handlers() {
     trap cleanup EXIT
 }
 
+# Clean up
 cleanup() {
     echo "Cleaning up..."
     # Add cleanup operations here
@@ -84,6 +93,7 @@ cleanup() {
 ###########################################
 # 5. DAEMON PROCESSES
 ###########################################
+# Create daemon process
 create_daemon() {
     # Example daemon process
     cat > daemon.sh << 'EOF'
@@ -106,6 +116,7 @@ EOF
 ###########################################
 # 6. CRON JOBS
 ###########################################
+# Set up cron jobs
 setup_cron_jobs() {
     # Create cron job (runs every hour)
     cron_job="0 * * * * /path/to/script.sh"
@@ -120,6 +131,7 @@ setup_cron_jobs() {
 ###########################################
 # 7. PROCESS PRIORITY
 ###########################################
+# Manage process priority
 manage_priority() {
     # Start process with nice
     nice -n 10 sleep 100 &
@@ -138,6 +150,7 @@ manage_priority() {
 ###########################################
 # MAIN EXECUTION
 ###########################################
+# Main execution
 main() {
     echo "=== Process Management Demo ==="
     
