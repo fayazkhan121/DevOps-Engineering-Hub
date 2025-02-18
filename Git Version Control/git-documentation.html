@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprehensive Git Version Control Guide</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #34495e;
+            margin-top: 30px;
+            border-bottom: 2px solid #bdc3c7;
+            padding-bottom: 5px;
+        }
+        h3 {
+            color: #2980b9;
+            margin-top: 25px;
+        }
+        code {
+            background-color: #f8f9fa;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        pre {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            border: 1px solid #ddd;
+        }
+        .note {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .warning {
+            background-color: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .tip {
+            background-color: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            margin: 20px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <h1>Comprehensive Guide to Git Version Control</h1>
+    
+    <h2>Table of Contents</h2>
+    <ol>
+        <li><a href="#introduction">Introduction to Version Control</a></li>
+        <li><a href="#git-basics">Git Basics</a></li>
+        <li><a href="#basic-commands">Basic Git Commands</a></li>
+        <li><a href="#branching">Branching and Merging Strategies</a></li>
+        <li><a href="#pull-requests">Pull Requests and Code Review</a></li>
+        <li><a href="#conflicts">Resolving Conflicts</a></li>
+        <li><a href="#workflow">GitHub/GitLab Workflow</a></li>
+        <li><a href="#real-world">Real-World Projects and Best Practices</a></li>
+        <li><a href="#advanced">Advanced Git Techniques</a></li>
+    </ol>
+
+    <h2 id="introduction">1. Introduction to Version Control</h2>
+    <p>Version control is a system that records changes to a file or set of files over time, enabling you to recall specific versions later. For software development, version control systems (VCS) are essential tools that help manage source code changes made by different developers.</p>
+
+    <h3>Why Version Control?</h3>
+    <ul>
+        <li>Track changes in code over time</li>
+        <li>Collaborate with other developers</li>
+        <li>Maintain different versions of a project</li>
+        <li>Recover from mistakes and errors</li>
+        <li>Work on features without affecting the main codebase</li>
+    </ul>
+
+    <div class="note">
+        <strong>Historical Context:</strong> Before distributed version control systems like Git, developers used centralized systems like SVN. Git, created by Linus Torvalds in 2005, revolutionized version control by introducing distributed repositories.
+    </div>
+
+    <h2 id="git-basics">2. Git Basics</h2>
+    
+    <h3>Understanding Git's Three States</h3>
+    <p>Files in Git can exist in three states:</p>
+    <ul>
+        <li><strong>Modified:</strong> Changes made but not committed to the database</li>
+        <li><strong>Staged:</strong> Marked a modified file in its current version to go into the next commit</li>
+        <li><strong>Committed:</strong> Data safely stored in the local database</li>
+    </ul>
+
+    <h3>Git Directory Structure</h3>
+    <pre>
+.git/
+├── HEAD           # Points to the current branch
+├── config        # Project-specific configuration
+├── description   # Project description
+├── hooks/        # Client/server-side hook scripts
+├── index         # Staging area information
+├── objects/      # Git object database
+└── refs/         # Pointers to commit objects
+    </pre>
+
+    <h2 id="basic-commands">3. Basic Git Commands</h2>
+
+    <h3>Initial Setup</h3>
+    <pre>
+# Configure user information
+git config --global user.name "Your Name"
+git config --global user.email "your.email@example.com"
+
+# Initialize a new repository
+git init
+
+# Clone an existing repository
+git clone https://github.com/username/repository.git
+    </pre>
+
+    <h3>Basic Operations</h3>
+    <pre>
+# Check status of working directory
+git status
+
+# Add files to staging area
+git add filename.txt    # Add specific file
+git add .              # Add all files
+git add *.js          # Add all JavaScript files
+
+# Commit changes
+git commit -m "Descriptive commit message"
+git commit -am "Add and commit in one command"
+
+# Push changes to remote
+git push origin main
+
+# Pull changes from remote
+git pull origin main
+    </pre>
+
+    <div class="tip">
+        <strong>Best Practice:</strong> Write meaningful commit messages that explain what changes were made and why. Follow the conventional commits format for better clarity.
+    </div>
+
+    <h3>Viewing History and Changes</h3>
+    <pre>
+# View commit history
+git log
+git log --oneline
+git log --graph --oneline --decorate
+
+# View changes in working directory
+git diff
+git diff --staged   # View staged changes
+    </pre>
+
+    <h2 id="branching">4. Branching and Merging Strategies</h2>
+
+    <h3>Understanding Branches</h3>
+    <p>Branches are lightweight movable pointers to commits. They allow you to:</p>
+    <ul>
+        <li>Develop features isolated from each other</li>
+        <li>Experiment with changes without affecting the main codebase</li>
+        <li>Maintain multiple versions of your software</li>
+    </ul>
+
+    <h3>Common Branching Strategies</h3>
+    
+    <h4>GitFlow</h4>
+    <pre>
+main (production)
+├── develop
+│   ├── feature/user-authentication
+│   ├── feature/payment-integration
+│   └── feature/email-notifications
+├── hotfix/security-patch
+└── release/v1.0.0
+    </pre>
+
+    <p>GitFlow involves these main branches:</p>
+    <ul>
+        <li><strong>main:</strong> Production-ready code</li>
+        <li><strong>develop:</strong> Integration branch for features</li>
+        <li><strong>feature/*:</strong> New features development</li>
+        <li><strong>release/*:</strong> Preparation for new production release</li>
+        <li><strong>hotfix/*:</strong> Urgent fixes for production issues</li>
+    </ul>
+
+    <h4>Trunk-Based Development</h4>
+    <pre>
+main
+├── feature-1 (short-lived)
+├── feature-2 (short-lived)
+└── hotfix (short-lived)
+    </pre>
+
+    <h3>Branch Commands</h3>
+    <pre>
+# Create and switch to new branch
+git checkout -b feature/new-feature
+
+# List all branches
+git branch
+git branch -a  # Include remote branches
+
+# Switch branches
+git checkout develop
+git switch develop  # New command in recent Git versions
+
+# Merge branches
+git merge feature/new-feature
+
+# Delete branch
+git branch -d feature/new-feature
+git branch -D feature/new-feature  # Force delete
+    </pre>
+
+    <h2 id="pull-requests">5. Pull Requests and Code Review</h2>
+
+    <h3>Creating Pull Requests</h3>
+    <p>Pull Requests (PRs) are a way to notify team members about changes you've pushed to a branch in a repository. They facilitate:</p>
+    <ul>
+        <li>Code review</li>
+        <li>Discussion about changes</li>
+        <li>Additional commits before merging</li>
+    </ul>
+
+    <pre>
+# Create a feature branch
+git checkout -b feature/awesome-feature
+
+# Make changes and commit
+git add .
+git commit -m "Add awesome feature"
+
+# Push to remote
+git push origin feature/awesome-feature
+    </pre>
+
+    <h3>Code Review Best Practices</h3>
+    <ul>
+        <li>Keep PRs small and focused</li>
+        <li>Write clear PR descriptions</li>
+        <li>Include relevant tests</li>
+        <li>Link to related issues</li>
+        <li>Use PR templates</li>
+    </ul>
+
+    <div class="tip">
+        <strong>PR Template Example:</strong>
+        <pre>
+## Description
+[Describe the changes made and why]
+
+## Type of Change
+- [ ] Bug fix
+- [ ] New feature
+- [ ] Breaking change
+- [ ] Documentation update
+
+## Testing
+- [ ] Unit tests added/updated
+- [ ] Integration tests added/updated
+- [ ] Manual testing performed
+
+## Screenshots
+[If applicable]
+
+## Related Issues
+Fixes #[issue number]
+        </pre>
+    </div>
+
+    <h2 id="conflicts">6. Resolving Conflicts</h2>
+
+    <h3>Understanding Conflicts</h3>
+    <p>Conflicts occur when Git can't automatically merge changes from different branches. This typically happens when:</p>
+    <ul>
+        <li>Different developers modify the same line of code</li>
+        <li>One developer deletes a file while another modifies it</li>
+        <li>Changes are made to both branches that can't be reconciled automatically</li>
+    </ul>
+
+    <h3>Conflict Resolution Process</h3>
+    <pre>
+# Attempt to merge
+git merge feature/conflicting-branch
+
+# Conflict markers in file
+<<<<<<< HEAD
+Current branch changes
+=======
+Incoming branch changes
+>>>>>>> feature/conflicting-branch
+
+# After resolving
+git add resolved-file.txt
+git commit -m "Resolve merge conflicts"
+    </pre>
+
+    <h3>Using Tools for Conflict Resolution</h3>
+    <ul>
+        <li>Visual Studio Code's built-in merge tool</li>
+        <li>GitKraken</li>
+        <li>Beyond Compare</li>
+        <li>Meld</li>
+    </ul>
+
+    <div class="warning">
+        <strong>Important:</strong> Always pull the latest changes from the target branch before starting conflict resolution to ensure you're working with the most recent code.
+    </div>
+
+    <h2 id="workflow">7. GitHub/GitLab Workflow</h2>
+
+    <h3>Repository Setup</h3>
+    <pre>
+# Create new repository on GitHub/GitLab
+# Initialize with README and .gitignore
+
+# Clone locally
+git clone [repository-url]
+
+# Set up remote
+git remote add origin [repository-url]
+git remote -v  # Verify remotes
+    </pre>
+
+    <h3>Working with Remotes</h3>
+    <pre>
+# Fetch remote changes
+git fetch origin
+
+# Pull with rebase
+git pull --rebase origin main
+
+# Push to remote
+git push -u origin feature/new-feature
+    </pre>
+
+    <h3>Protected Branches</h3>
+    <p>Configure branch protection rules:</p>
+    <ul>
+        <li>Require pull request reviews</li>
+        <li>Require status checks to pass</li>
+        <li>Require signed commits</li>
+        <li>Prevent force pushes</li>
+    </ul>
+
+    <h2 id="real-world">8. Real-World Projects and Best Practices</h2>
+
+    <h3>Project Structure Example</h3>
+    <pre>
+project/
+├── .git/
+├── .gitignore
+├── .github/
+│   ├── workflows/
+│   └── PULL_REQUEST_TEMPLATE.md
+├── src/
+├── tests/
+├── docs/
+└── README.md
+    </pre>
+
+    <h3>GitIgnore Best Practices</h3>
+    <pre>
+# Node.js
+node_modules/
+npm-debug.log
+
+# Build output
+dist/
+build/
+
+# IDE files
+.vscode/
+.idea/
+
+# Environment variables
+.env
+.env.local
+
+# OS files
+.DS_Store
+Thumbs.db
+    </pre>
+
+    <h3>Commit Message Conventions</h3>
+    <pre>
+type(scope): subject
+
+body
+
+footer
+    </pre>
+
+    <p>Types:</p>
+    <ul>
+        <li><code>feat:</code> New feature</li>
+        <li><code>fix:</code> Bug fix</li>
+        <li><code>docs:</code> Documentation changes</li>
+        <li><code>style:</code> Formatting changes</li>
+        <li><code>refactor:</code> Code restructuring</li>
+        <li><code>test:</code> Adding/updating tests</li>
+        <li><code>chore:</code> Maintenance tasks</li>
+    </ul>
+
+    <h2 id="advanced">9. Advanced Git Techniques</h2>
+
+    <h3>Interactive Rebase</h3>
+    <pre>
+# Start interactive rebase
+git rebase -i HEAD~3
+
+# Commands available:
+# p, pick = use commit
+# r, reword = use commit, but edit the commit message
+# e, edit = use commit, but stop for amending
+# s, squash = use commit, but meld into previous commit
+# f, fixup = like "squash", but discard this commit's log message
+# d, drop = remove commit
+    </pre>
+
+    <h3>Cherry-Picking</h3>
+    <pre>
+# Apply specific commit to current branch
+git cherry-pick commit-hash
+
+# Cherry-pick without committing
+git cherry-pick -n commit-hash
+    </pre>
+
+    <h3>Reflog</h3>
+    <pre>
+# View reflog
+git reflog
+
+# Recover deleted branch
+git checkout -b recovered-branch HEAD@{1}
+    </pre>
+
+    <div class="tip">
+        <strong
